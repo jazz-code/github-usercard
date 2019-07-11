@@ -25,7 +25,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -54,16 +54,58 @@ const followersArray = [];
   luishrd
   bigknell
 */
-
-axios.get(`https://api.github.com/users/jazz-code`).then(data => {
-  console.log("response", data);
-  const cards = document.querySelector(".cards");
-  const githubData = githubComponent(data.data);
-  cards.appendChild(githubData);
-});
-// .catch(err => {
-//   console.log(err);
+/* Step 5: Now that you have your own card getting added to the DOM, either 
+          follow this link in your browser https://api.github.com/users/<Your github name>/followers 
+          , manually find some other users' github handles, or use the list found 
+          at the bottom of the page. Get at least 5 different Github usernames and add them as
+          Individual strings to the friendsArray below.
+          
+          Using that array, iterate over it, requesting data for each user, creating a new card for each
+          user, and adding that card to the DOM.
+*/
+// const tetodan = `https://api.github.com/users/tetodan/`;
+// const dustinmyers = `https://api.github.com/users/dustinmyers/`;
+// const justsml = `https://api.github.com/users/justsml/`;
+// const luishrd = `https://api.github.com/users/luishrd/`;
+// const bigknell = `https://api.github.com/users/bigknell/`;
+const cards = document.querySelector(".cards");
+const followersArray = [
+  axios.get(`https://api.github.com/users/tetondan`),
+  axios.get(`https://api.github.com/users/dustinmyers`),
+  axios.get(`https://api.github.com/users/justsml`),
+  axios.get(`https://api.github.com/users/luishrd`),
+  axios.get(`https://api.github.com/users/bigknell`),
+  axios.get(`https://api.github.com/users/danbergelt`)
+];
+// Promise.all([followersArray]).forEach(user => {
+//   user.then(data => {
+//     const userData = data.data;
+//     const element = githubComponent(userData);
+//     cards.appendChild(element);
+//   });
 // });
+followersArray.forEach(user => {
+  user
+    .then(data => {
+      const userData = data.data;
+      const element = githubComponent(userData);
+      cards.appendChild(element);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+axios
+  .get(`https://api.github.com/users/jazz-code`)
+  .then(data => {
+    console.log("response", data);
+    const githubData = githubComponent(data.data);
+    cards.appendChild(githubData);
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 function githubComponent(githubObj) {
   const card = document.createElement("div");
@@ -90,7 +132,8 @@ function githubComponent(githubObj) {
   const profile = document.createElement("p");
   profile.textContent = `Profile: ${githubObj.html_url}`;
 
-  // const anchor = document.createElement("a");
+  const anchor = document.createElement("a");
+  anchor.href = githubObj.html_url;
 
   const followers = document.createElement("p");
   followers.textContent = `Followers: ${githubObj.followers}`;
@@ -107,6 +150,7 @@ function githubComponent(githubObj) {
   card.appendChild(userName);
   card.appendChild(location);
   card.appendChild(profile);
+  card.appendChild(anchor);
   card.appendChild(followers);
   card.appendChild(following);
   card.appendChild(bio);
