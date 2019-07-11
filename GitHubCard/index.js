@@ -2,7 +2,7 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-const promise = axios.get(`https://api.github.com/users/jazz-code`);
+// const promise = axios.get(`https://api.github.com/users/jazz-code`);
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -10,9 +10,7 @@ const promise = axios.get(`https://api.github.com/users/jazz-code`);
 
    Skip to Step 3.
 */
-promise.then(data => {
-  console.log("response", data);
-});
+
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
@@ -56,12 +54,24 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+axios.get(`https://api.github.com/users/jazz-code`).then(data => {
+  console.log("response", data);
+  const cards = document.querySelector(".cards");
+  const githubData = githubComponent(data.data);
+  cards.appendChild(githubData);
+});
+// .catch(err => {
+//   console.log(err);
+// });
+
 function githubComponent(githubObj) {
   const card = document.createElement("div");
   card.classList.add("card");
 
   const img = document.createElement("img");
-  img.classList.add("card img");
+  img.classList.add("img");
+  img.src = githubObj.avatar_url;
 
   const cardInfo = document.createElement("div");
   cardInfo.classList.add("card-info");
@@ -90,4 +100,16 @@ function githubComponent(githubObj) {
 
   const bio = document.createElement("p");
   bio.textContent = `Bio: ${githubObj.bio}`;
+
+  card.appendChild(img);
+  card.appendChild(cardInfo);
+  card.appendChild(title);
+  card.appendChild(userName);
+  card.appendChild(location);
+  card.appendChild(profile);
+  card.appendChild(followers);
+  card.appendChild(following);
+  card.appendChild(bio);
+
+  return card;
 }
