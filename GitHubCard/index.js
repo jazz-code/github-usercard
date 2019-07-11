@@ -2,7 +2,7 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-const promise = axios.get(`https://api.github.com/users/jazz-code`)
+const promise = axios.get(`https://api.github.com/users/jazz-code`);
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -10,10 +10,9 @@ const promise = axios.get(`https://api.github.com/users/jazz-code`)
 
    Skip to Step 3.
 */
-promise
-  .then(data => {
-    console.log('response', data);
-})
+promise.then(data => {
+  console.log("response", data);
+});
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
@@ -57,3 +56,38 @@ const followersArray = [];
   luishrd
   bigknell
 */
+function githubComponent(githubObj) {
+  const card = document.createElement("div");
+  card.classList.add("card");
+
+  const img = document.createElement("img");
+  img.classList.add("card img");
+
+  const cardInfo = document.createElement("div");
+  cardInfo.classList.add("card-info");
+
+  const title = document.createElement("h3");
+  title.classList.add("name");
+  title.textContent = githubObj.name;
+
+  const userName = document.createElement("p");
+  userName.classList.add("username");
+  userName.textContent = githubObj.login;
+
+  const location = document.createElement("p");
+  location.textContent = `Location: ${githubObj.location}`;
+
+  const profile = document.createElement("p");
+  profile.textContent = `Profile: ${githubObj.html_url}`;
+
+  // const anchor = document.createElement("a");
+
+  const followers = document.createElement("p");
+  followers.textContent = `Followers: ${githubObj.followers}`;
+
+  const following = document.createElement("p");
+  following.textContent = `Following: ${githubObj.following}`;
+
+  const bio = document.createElement("p");
+  bio.textContent = `Bio: ${githubObj.bio}`;
+}
