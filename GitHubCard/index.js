@@ -126,14 +126,18 @@ function githubComponent(githubObj) {
   userName.classList.add("username");
   userName.textContent = githubObj.login;
 
+  // const container = document.createElement("div");
+  // container.classList.add("container");
+
+  const button = document.createElement("button");
+  button.classList.add("expandButton");
+  button.textContent = "More Info";
+
   const location = document.createElement("p");
   location.textContent = `Location: ${githubObj.location}`;
 
   const profile = document.createElement("p");
-  profile.textContent = `Profile: ${githubObj.html_url}`;
-
-  const anchor = document.createElement("a");
-  anchor.href = githubObj.html_url;
+  profile.innerHTML = `Profile: <a href=${githubObj.html_url}>${githubObj.html_url}</a> `;
 
   const followers = document.createElement("p");
   followers.textContent = `Followers: ${githubObj.followers}`;
@@ -146,14 +150,15 @@ function githubComponent(githubObj) {
 
   card.appendChild(img);
   card.appendChild(cardInfo);
-  card.appendChild(title);
-  card.appendChild(userName);
-  card.appendChild(location);
-  card.appendChild(profile);
-  card.appendChild(anchor);
-  card.appendChild(followers);
-  card.appendChild(following);
-  card.appendChild(bio);
+  cardInfo.appendChild(title);
+  cardInfo.appendChild(userName);
+  // card.appendChild(container);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+  cardInfo.appendChild(button);
 
   return card;
 }
